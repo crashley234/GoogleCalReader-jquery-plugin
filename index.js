@@ -36,7 +36,6 @@
         data.items = data.items.slice(0, defaults.maxEvents);
 
         $.each(data.items, function(e, item) {
-          // console.log(item);
           var eventdate = item.start.dateTime || item.start.date ||'';
           var endDate = item.end.dateTime || item.end.date || '';          
           var summary = item.summary || '';
