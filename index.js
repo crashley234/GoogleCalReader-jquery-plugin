@@ -10,7 +10,11 @@
         errorMsg: 'No events in calendar',
         maxEvents: 50,
         futureEventsOnly: true,
-        sortDescending: true
+        sortDescending: true,
+        showDescription: true,
+        showLocation: true,
+        showEndDate: true,
+        endDateFormat: 'ShortTime'
       },
       options);
 
@@ -25,24 +29,29 @@
     $.ajax({
       url: feedUrl,
       dataType: 'json',
-      success: function(data) {
+      success: function(data) {        
         if(defaults.sortDescending){
           data.items = data.items.reverse();
         }
         data.items = data.items.slice(0, defaults.maxEvents);
 
         $.each(data.items, function(e, item) {
+          // console.log(item);
           var eventdate = item.start.dateTime || item.start.date ||'';
+          var endDate = item.end.dateTime || item.end.date || '';          
           var summary = item.summary || '';
 					var description = item.description;
 					var location = item.location;
 					var eventDate = formatDate(eventdate, defaults.dateFormat.trim());
+          if(defaults.showEndDate) {
+            eventDate += ' - '+formatDate(endDate, defaults.endDateFormat.trim());
+          }
 					s ='<div class="eventtitle">'+ summary +'</div>';
 					s +='<div class="eventdate"> When: '+ eventDate +'</div>';
-					if(location) {
+					if(location && defaults.showLocation) {
 						s +='<div class="location">Where: '+ location +'</div>';
 					}
-					if(description) {
+					if(description && defaults.showDescription) {
 						s +='<div class="description">'+ description +'</div>';
 					}
 					$($div).append('<li>' + s + '</li>');
@@ -130,6 +139,9 @@
         case 'MonthDay':
           fd = calendar.months.full[month] + ' ' + dayNum;
           break;
+        case 'ShortMonthDay':
+          fd = calendar.months.short[month] + ' ' + dayNum;
+          break;  
         case 'YearMonth':
           fd = calendar.months.full[month] + ' ' + year;
           break;
