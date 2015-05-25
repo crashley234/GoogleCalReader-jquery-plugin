@@ -43,11 +43,15 @@
 					var description = item.description;
 					var location = item.location;
 					var eventDate = formatDate(eventdate, defaults.dateFormat.trim());
-          if(defaults.showEndDate) {
-            eventDate += ' - '+formatDate(endDate, defaults.endDateFormat.trim());
+          var eventDay = formatDate(eventdate, 'Day');
+          var eventTime = formatDate(eventdate, 'ShortTime');
+          var endTime = formatDate(endDate, 'ShortTime');          
+          s = '<div class="eventDate">'+eventDate+'</div>';          
+					s +='<div class="eventTitle">'+ summary +'</div>';
+          if (endDate) {
+            eventTime += ' - '+endTime;
           }
-					s ='<div class="eventtitle">'+ summary +'</div>';
-					s +='<div class="eventdate"> When: '+ eventDate +'</div>';
+          s +='<div class="eventDay">'+eventDay+' | '+eventTime+'</div>';          
 					if(location && defaults.showLocation) {
 						s +='<div class="location">Where: '+ location +'</div>';
 					}
@@ -144,6 +148,9 @@
           break;  
         case 'YearMonth':
           fd = calendar.months.full[month] + ' ' + year;
+          break;
+        case 'Day':
+          fd = calendar.days.full[d.getDay()];
           break;
         default:
           fd = calendar.days.full[d.getDay()] + ' ' + calendar.months.short[
