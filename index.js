@@ -46,7 +46,7 @@
           var eventTime = formatDate(eventdate, 'ShortTime');
           var endTime = formatDate(endDate, 'ShortTime');          
           s = '<div class="eventDate">'+eventDate+'</div>';          
-					s +='<div class="eventTitle">'+ summary +'</div>';
+					s +='<div class="eventTitle"><a href="'+item.htmlLink+'" target="_blank">'+ summary +'</a></div>';
           if (endDate) {
             eventTime += ' - '+endTime;
           }
