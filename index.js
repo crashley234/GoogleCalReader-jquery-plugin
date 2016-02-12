@@ -25,11 +25,12 @@
       if(defaults.futureEventsOnly) {
         feedUrl+='&timeMin='+ new Date().toISOString();
       }
+      console.log(feedUrl);
 
     $.ajax({
       url: feedUrl,
       dataType: 'json',
-      success: function(data) {        
+      success: function(data) {
         if(defaults.sortDescending){
           data.items = data.items.reverse();
         }
@@ -37,20 +38,20 @@
 
         $.each(data.items, function(e, item) {
           var eventdate = item.start.dateTime || item.start.date ||'';
-          var endDate = item.end.dateTime || item.end.date || '';          
+          var endDate = item.end.dateTime || item.end.date || '';
           var summary = item.summary || '';
 					var description = item.description;
 					var location = item.location;
 					var eventDate = formatDate(eventdate, defaults.dateFormat.trim());
           var eventDay = formatDate(eventdate, 'Day');
           var eventTime = formatDate(eventdate, 'ShortTime');
-          var endTime = formatDate(endDate, 'ShortTime');          
-          s = '<div class="eventDate">'+eventDate+'</div>';          
+          var endTime = formatDate(endDate, 'ShortTime');
+          s = '<div class="eventDate">'+eventDate+'</div>';
 					s +='<div class="eventTitle"><a href="'+item.htmlLink+'" target="_blank">'+ summary +'</a></div>';
-          if (endDate) {
+          if (endDate && endTime != "All Day") {
             eventTime += ' - '+endTime;
           }
-          s +='<div class="eventDay">'+eventDay+' | '+eventTime+'</div>';          
+          s +='<div class="eventDay">'+eventDay+' | '+eventTime+'</div>';
 					if(location && defaults.showLocation) {
 						s +='<div class="location">Where: '+ location +'</div>';
 					}
@@ -108,7 +109,7 @@
 
       } else {
         arrDate = /(\d+)\-(\d+)\-(\d+)/.exec(strDate);
-        time = 'Time not present in feed.';
+        time = 'All Day';
       }
 
       var year = parseInt(arrDate[1]);
@@ -144,7 +145,7 @@
           break;
         case 'ShortMonthDay':
           fd = calendar.months.short[month] + ' ' + dayNum;
-          break;  
+          break;
         case 'YearMonth':
           fd = calendar.months.full[month] + ' ' + year;
           break;
