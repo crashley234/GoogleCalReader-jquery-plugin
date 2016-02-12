@@ -14,13 +14,25 @@
 <script src="../index.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-   jQuery(function ($) {
-       $('#eventlist').gCalReader({
-         calendarId:'en.usa#holiday@group.v.calendar.google.com',
-         apiKey:'AIzaSyAVhU0GdCZQidylxz7whIln82rWtZ4cIDQ',
-         sortDescending: false
-        });
-	 });
+  //  jQuery(function ($) {
+  //      $('#eventlist').gCalReader({
+  //        calendarId:'en.usa#holiday@group.v.calendar.google.com',
+  //        apiKey:'AIzaSyAVhU0GdCZQidylxz7whIln82rWtZ4cIDQ',
+  //        sortDescending: false
+  //       });
+	 // });
+                       jQuery(function ($) {
+                           $('#eventlist').gCalReader({
+                                calendarId:'splchastingsmn@gmail.com',
+                                apiKey:'AIzaSyAVhU0GdCZQidylxz7whIln82rWtZ4cIDQ',
+                                maxEvents: 10,
+                                dateFormat: 'ShortMonthDay',
+                                showLocation: false,
+                                futureEventsOnly: true,
+                                sortDescending: false,
+                                showDescription: false
+                            });
+                       });
 </script>
 <body>
   <h1>Upcoming Holidays (demo) </h1>
